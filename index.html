@@ -1,0 +1,65 @@
+<h<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Canvas Text</title>
+</head>
+<body>
+<h1>Interactive Canvas Text</h1>
+<p>Use the arrow keys to move the text around the canvas.</p>
+  
+<canvas id="myCanvas" width="500" height="500" style="border:1em solid #000000;">
+Your browser does not support the HTML canvas tag.
+</canvas>
+
+  <script>
+    let c = document.getElementById("myCanvas")
+    let ctx = c.getContext("2d")
+    let textX = 10
+    let textY = 50
+    let delta = 5
+    let color = "black"
+
+    function drawText() {
+      ctx.clearRect(0, 0, c.width, c.height)
+      ctx.font = "3em Arial"
+      ctx.fillStyle = color
+      ctx.fillText("MSU Denver", textX, textY)
+    }
+
+    function randomColor() {
+    return "hsl(" + Math.random() * 360 + ", 80%, 50%)";
+  }
+
+    window.addEventListener('keydown', (e) => {
+     ctx.font = "3em Arial";
+    let textWidth = ctx.measureText("MSU Denver").width;
+
+    let textHeight = 50;
+    
+      switch (e.key) {
+        case 'ArrowUp':
+          if (textY - delta > textHeight / 2) textY -= delta;
+          break;
+        case 'ArrowDown':
+          if (textY + delta < c.height - 10) textY += delta;
+          break;
+        case 'ArrowLeft':
+          if (textX - delta > 0) textX -= delta;
+          break;
+        case 'ArrowRight':
+          if (textX + textWidth + delta < c.width) textX += delta;
+          break;
+        default:
+          return
+      }
+      
+        color = randomColor();
+      
+        drawText()
+      }
+    )
+
+    drawText()
+  </script>
+</body>
+</html>
